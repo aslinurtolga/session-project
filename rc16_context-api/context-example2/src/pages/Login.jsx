@@ -2,14 +2,28 @@ import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+// import { useContext } from "react";
+// import { LoginContext } from "../context/LoginContext";
+import { useNavigate } from "react-router-dom";
+import { useLoginContext } from "../context/LoginProvider";
 
 const Login = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
+  //! local state
+  // const [user, setUser] = useState({ email: "", password: "" });
+
+  //! Consuming LoginContext
+  // const { user, setUser } = useContext(LoginContext);
+
+  const { user, setUser } = useLoginContext();
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate(-1);
   };
 
+  console.log(user);
   return (
     <Container>
       <h1 className="text-center mt-4">LOGIN PAGE</h1>
@@ -20,7 +34,7 @@ const Login = () => {
             type="email"
             placeholder="Enter your email"
             name="email"
-            value={user?.email}
+            value={user?.email || ""}
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </Form.Group>
@@ -31,7 +45,7 @@ const Login = () => {
             type="password"
             placeholder="Enter your password"
             name="password"
-            value={user?.password}
+            value={user?.password || ""}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
         </Form.Group>
